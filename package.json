@@ -1,0 +1,21 @@
+{
+  "name": "cwLayoutFilteredListBox",
+  "version": "0.0.0",
+  "description": "Allow you to filter data when in edit mode, according another view set up",
+  "main": "src/cwLayoutFilteredListBox.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JGrndn/cwLayoutFilteredListBox.git"
+  },
+  "author": "Jerome Grondin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JGrndn/cwLayoutFilteredListBox/issues"
+  },
+  "homepage": "https://github.com/JGrndn/cwLayoutFilteredListBox/wiki",
+  "wiki": "https://github.com/JGrndn/cwLayoutFilteredListBox/wiki",
+  "evolve-version": "4.0 - 4.2"
+}
