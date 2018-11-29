@@ -84,6 +84,10 @@
     }
 
     cwLayoutFilteredListBox.prototype.drawAssociations = function (output, associationTitleText, object) {
+        if(cwApi.customLibs.utils === undefined) {
+            output.push("<h2> Please Install Utils library </h2>");
+            return;
+        }
         var l, listBoxNameFromNode, associationTypeScriptName, associationTargetNode, objectId, canAddAssociation, ot, nodeSchema, layout;
 
         layout = this;
@@ -117,7 +121,7 @@
         if (!cwApi.isUndefined(objectId)) {
             output.push(" data-source-id='", objectId, "'");
         }
-        output.push(" class='property-box ", layout.nodeID, "-node-box property-box-asso ");
+        output.push(" class='filteredListBox property-box ", layout.nodeID, "-node-box property-box-asso ");
         if (associationTargetNode.length > 0 || cwApi.queryObject.isEditMode()) {
             output.push('cw-visible');
         } else {
@@ -189,17 +193,42 @@
         if (!cwApi.isUndefined(that.loadingInProgress[otName])) {
             return addToWaitingForUpdate(that, otName, callback);
         }
-        var url = cwApi.getLiveServerURL() + "page/" + assoToLoad.targetViewName + '?' + Math.random();
+
+        var targetView = cwAPI.getView(assoToLoad.targetViewName);
+        if(targetView === undefined) {
+            // message d'erreur
+            cwAPI.notificationManager.addError(assoToLoad.targetViewName + " doesn't exist");
+            return;
+        }
+        if(targetView.type === "Index") {
+           var url = cwApi.getLiveServerURL() + "page/" + assoToLoad.targetViewName + '?' + Math.random(); 
+        } else {
+           var url = cwApi.getLiveServerURL() + "page/" + assoToLoad.targetViewName + "/" + that.objectId +   '?' + Math.random(); 
+        }
+        
         that.loadingInProgress[otName] = true;
         $.getJSON(url, function (json) {
+
+            // manage hidden Nodes
+            var nodeIDs = Object.keys(cwAPI.getViewsSchemas()[assoToLoad.targetViewName].NodesByID);
+            nodeIDs.splice(nodeIDs.indexOf(assoToLoad.nodeId),1);
+            nodeIDs.splice(nodeIDs.indexOf(assoToLoad.nodeIdChild),1);
+            
+            if(targetView.type === "Index") {
+                cwAPI.customLibs.utils.manageHiddenNodes(json,nodeIDs);
+            } else {
+                cwAPI.customLibs.utils.manageHiddenNodes(json.object.associations,nodeIDs);
+                json = json.object.associations;
+            }
             that.loadedItems[otName] = json[assoToLoad.nodeId];
+            
             updateWaitingForUpdateList(that, otName, json);
             delete that.loadingInProgress[otName];
             return callback(json);
         });
     }
 
-    function setOptionListToSelect($select, json, itemsById, alreadyAssociatedItems) {
+    function setOptionListToSelect($select, json, itemsById, alreadyAssociatedItems,assoToLoad) {
         var o, list, i, item, markedForDeletion;
         o = ['<option></option>'];
         list = json[Object.keys(json)[0]];
@@ -211,7 +240,8 @@
             if (!cwApi.isUndefined(alreadyAssociatedItems[item.object_id])) {
                 o.push(' selected');
             }
-            o.push('>', item.name, '</option>');
+
+            o.push('>', cwAPI.customLibs.utils.getItemDisplayString(assoToLoad.targetViewName,item), '</option>');
         }
         $select.html(o.join(''));
     }
@@ -280,7 +310,7 @@
             var itemId = params.selected;
             var itemsById = {};
             var json = this.itemsById[itemId].associations;
-            setOptionListToSelect($selectData, json, itemsById, this.alreadyAssociatedItems);
+            setOptionListToSelect($selectData, json, itemsById, this.alreadyAssociatedItems,this.assoToLoad);
             $selectData.trigger("chosen:updated");
             $selectData.off('change');
             $selectData.on('change', onSelectChange.bind({
@@ -327,9 +357,11 @@
         var assoToLoad = {
             layoutId: layout.layoutId,
             nodeId: layout.options.CustomOptions['view-root-nodeid'],
+            nodeIdChild: layout.options.CustomOptions['selection-data-nodeid'],
             sourceId : layout.objectId,
             targetObjectTypeScriptName : layout.mmNode.ObjectTypeScriptName,
-            targetViewName: layout.options.CustomOptions['filtered-view']
+            targetViewName: layout.options.CustomOptions['filtered-view'],
+            singleView: layout.options.CustomOptions['singleView']
         };
         layout.loadedItems = {};
         layout.loadingInProgress = {};
@@ -360,7 +392,7 @@
                 getItems(layout, assoToLoad, function (json) {
                     var itemsById = {};
                     //setOptionListToSelect($selectFilter, json, itemsById, alreadyAssociatedItems);
-                    setOptionListToSelect($selectFilter, json, itemsById, {});
+                    setOptionListToSelect($selectFilter, json, itemsById, {},assoToLoad);
                     $select.removeAttr('disabled');
                     $select.chosen({
                         no_results_text: $.i18n.prop('EditModeAssociateNoItemFound'),

@@ -24,14 +24,14 @@
 /* GRID */
 /* DIAGRAM TILE */
 /* MATRIX ADVANCED */
-ul.property-details {
+.filteredListBox ul.property-details {
   margin: 0px;
   padding: 0px;
 }
-ul.property-details li.property-details {
+.filteredListBox ul.property-details li.property-details {
   list-style: none;
 }
-ul.property-details .property-title {
+.filteredListBox ul.property-details .property-title {
   background: #009688;
   color: #FFFFFF;
   font-size: 13px;
@@ -39,18 +39,26 @@ ul.property-details .property-title {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
 }
-ul.property-details .property-value {
+.filteredListBox ul.property-details .property-value {
   padding: 8px;
   border: 1px solid #009688;
   border-top: none;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
-ul.property-details .cw-property-details-association {
-  text-align: right;
+.filteredListBox ul.property-details .cw-property-details-association {
+  text-align: left;
   width: 100%;
 }
-ul.property-details .cw-edit-mode-association-search {
+
+.filteredListBox .chosen-container {
+  width: 100% !important;
+}
+
+
+
+
+.filteredListBox ul.property-details .cw-edit-mode-association-search {
   width: 100%;
   margin: 3px 0 2px 0;
   padding: 5px;
@@ -61,10 +69,10 @@ ul.property-details .cw-edit-mode-association-search {
   box-sizing: border-box;
   font-size: 100%;
 }
-ul.property-details .cw-edit-mode-association-search::-ms-clear {
+.filteredListBox ul.property-details .cw-edit-mode-association-search::-ms-clear {
   display: none;
 }
-ul.property-details .gs-create-new-assocation {
+.filteredListBox ul.property-details .gs-create-new-assocation {
   position: absolute;
   top: 7px;
   right: 7px;
@@ -83,10 +91,10 @@ ul.property-details .gs-create-new-assocation {
   transition-timing-function: ease-in-out;
   /*.no-transition-visibility();*/
 }
-ul.property-details .gs-create-new-assocation i {
+.filteredListBox ul.property-details .gs-create-new-assocation i {
   font-size: 20px;
 }
-ul.property-details .cw-edit-mode-association-search-result {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result {
   background: white;
   width: 100%;
   padding: 0;
@@ -99,7 +107,7 @@ ul.property-details .cw-edit-mode-association-search-result {
   display: none;
   z-index: 1;
 }
-ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results {
   list-style: none;
   background: white;
   width: 100%;
@@ -110,7 +118,7 @@ ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-associ
   overflow-y: scroll;
   max-height: 120px;
 }
-ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results li {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results li {
   background: white;
   font-size: 100%;
   margin: 0;
@@ -122,20 +130,20 @@ ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-associ
   text-align: left;
   color: black;
 }
-ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results li:hover {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results li:hover {
   background: #78909c;
   color: white;
   cursor: pointer;
 }
-ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results li.deactive-result {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results li.deactive-result {
   color: #aaa;
   cursor: no-drop;
 }
-ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results li.deactive-result:hover {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .cw-edit-mode-association-search-results li.deactive-result:hover {
   background: #aaa;
   color: white;
 }
-ul.property-details .cw-edit-mode-association-search-result .gs-search-associate-label {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .gs-search-associate-label {
   text-align: left;
   display: none;
   font-size: 100%;
@@ -146,58 +154,57 @@ ul.property-details .cw-edit-mode-association-search-result .gs-search-associate
   word-wrap: break-word;
   box-sizing: border-box;
 }
-ul.property-details .cw-edit-mode-association-search-result .loading-label {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .loading-label {
   color: grey;
   font-size: 20px;
   background: white;
   text-align: center;
 }
-ul.property-details .cw-edit-mode-association-search-result .no-results,
-ul.property-details .cw-edit-mode-association-search-result .empty-search-no-objects {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .no-results,
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .empty-search-no-objects {
   background: #f4f4f4;
   color: black;
 }
-ul.property-details .cw-edit-mode-association-search-result .search-ofline {
+.filteredListBox ul.property-details .cw-edit-mode-association-search-result .search-ofline {
   background: #e43945;
   color: white;
 }
-ul.property-details .chosen-container-active .chosen-choices {
+.filteredListBox ul.property-details .chosen-container-active .chosen-choices {
   box-shadow: none;
 }
-ul.property-details .chosen-container {
+.filteredListBox ul.property-details .chosen-container {
   margin-top: 5px;
 }
-ul.property-details .chosen-container .chosen-results li.highlighted {
+.filteredListBox ul.property-details .chosen-container .chosen-results li.highlighted {
   background: none;
   background-color: #78909C;
   color: white;
 }
-ul.property-details .chosen-container li.active-result,
-ul.property-details .chosen-container li.no-results {
+.filteredListBox ul.property-details .chosen-container li.active-result,
+.filteredListBox ul.property-details .chosen-container li.no-results {
   color: black;
 }
-ul.property-details .chosen-container .chosen-choices li.search-choice-focus {
+.filteredListBox ul.property-details .chosen-container .chosen-choices li.search-choice-focus {
   background: red;
 }
-div.cw-property-details-left {
+.filteredListBox div.cw-property-details-left {
   display: inline-block;
   width: 50%;
   vertical-align: middle;
   padding: 10px 0 9px 0;
 }
-div.cw-property-details-right {
+.filteredListBox div.cw-property-details-right {
   display: inline-block;
   width: 50%;
   text-align: right;
   vertical-align: top;
   position: relative;
 }
-div.property-box {
+div.filteredListBox  {
   background-color: white;
   max-width: 1210px;
   width: 100%;
-}
-div.property-box-asso {
   margin-bottom: 10px;
   border-radius: 2px;
 }
+
