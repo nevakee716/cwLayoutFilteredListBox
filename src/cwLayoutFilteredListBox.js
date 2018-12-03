@@ -1,30 +1,33 @@
 /* Copyright � 2012-2017 erwin, Inc. - All rights reserved */
 /*global cwAPI, jQuery*/
 
-(function (cwApi, $) {
+(function(cwApi, $) {
     'use strict';
     var cwLayoutFilteredListBox;
 
-    cwLayoutFilteredListBox = function (options, viewSchema) {
+    cwLayoutFilteredListBox = function(options, viewSchema) {
         cwApi.extend(this, cwApi.cwLayouts.CwLayout, options, viewSchema);
         this.drawOneMethod = cwApi.cwLayouts.cwLayoutList.drawOne.bind(this);
         cwApi.registerLayoutForJSActions(this);
     };
 
-    cwLayoutFilteredListBox.appendAssociationSelect = function (output, nodeId, objectId, filterLabel, dataLabel) {
+    cwLayoutFilteredListBox.appendAssociationSelect = function(output, nodeId, objectId, filterLabel, dataLabel) {
         if (cwApi.cwEditProperties.canAddAssociationInput(nodeId)) {
             output.push('<div class="cw-property-details-association">');
-            output.push('<p class="cw-hidden cw-edit-mode"><label id="cw-edit-mode-', nodeId, '-', objectId, '-filterlabel">', filterLabel, '</label>&nbsp;&nbsp;',
-                '<select id="cw-edit-mode-autocomplete-', nodeId, '-', objectId, '-filterddl" disabled="disabled" class="cw-hidden chosen-select cw-edit-mode-association-autocomplete cw-edit-mode-association-autocomplete-filterddl cw-edit-mode-autocomplete-', 
-                nodeId, ' cw-edit-mode-association-autocomplete-filter-', nodeId);
-            output.push('"></select></p><p class="cw-hidden cw-edit-mode">');
-            output.push('<label>',dataLabel,'</label>&nbsp;&nbsp;<select multiple data-placeholder="' + 'Use the arrows or select the objects to associate' + 
-            '" disabled="disabled" data-ul-container-id="', nodeId, '-', objectId, '"  id="cw-edit-mode-autocomplete-', nodeId, '-', objectId, 
+            if (true || filterLabel !== "") {
+                output.push('<p class="cw-hidden cw-edit-mode"><label id="cw-edit-mode-', nodeId, '-', objectId, '-filterlabel">', filterLabel, '</label>&nbsp;&nbsp;',
+                    '<select id="cw-edit-mode-autocomplete-', nodeId, '-', objectId, '-filterddl" disabled="disabled" class="cw-hidden chosen-select cw-edit-mode-association-autocomplete cw-edit-mode-association-autocomplete-filterddl cw-edit-mode-autocomplete-',
+                    nodeId, ' cw-edit-mode-association-autocomplete-filter-', nodeId);
+                output.push('"></select></p>');
+            }
+
+            output.push('<p class="cw-hidden cw-edit-mode"><label>', dataLabel, '</label>&nbsp;&nbsp;<select multiple data-placeholder="' + 'Use the arrows or select the objects to associate' +
+                '" disabled="disabled" data-ul-container-id="', nodeId, '-', objectId, '"  id="cw-edit-mode-autocomplete-', nodeId, '-', objectId,
                 '" class="cw-hidden chosen-select cw-edit-mode-association-autocomplete cw-edit-mode-autocomplete-', nodeId, ' cw-edit-mode-association-autocomplete-data-', nodeId);
             output.push('"></select></p>');
             output.push('</div>');
         }
-    }; 
+    };
 
     function removeItem($e, updateSelect) {
         cwApi.CwPendingEventsManager.setEvent("AssociationRemoveItem");
@@ -43,7 +46,7 @@
             }
         }
         $e.addClass('animated bounceOutDown');
-        setTimeout(function () {
+        setTimeout(function() {
             $e.remove();
             cwApi.CwPendingEventsManager.deleteEvent("AssociationRemoveItem");
         }, 1000);
@@ -72,9 +75,9 @@
 
     function isWarning(filters, properties) {
         var showError = false;
-        Object.keys(filters).some(function (key) {
+        Object.keys(filters).some(function(key) {
             var property = properties[key.toLowerCase()];
-            filters[key].some(function (values) {
+            filters[key].some(function(values) {
                 showError = checkFilter(values, property);
                 return showError;
             });
@@ -83,8 +86,8 @@
         return showError;
     }
 
-    cwLayoutFilteredListBox.prototype.drawAssociations = function (output, associationTitleText, object) {
-        if(cwApi.customLibs.utils === undefined) {
+    cwLayoutFilteredListBox.prototype.drawAssociations = function(output, associationTitleText, object) {
+        if (cwApi.customLibs.utils === undefined) {
             output.push("<h2> Please Install Utils library </h2>");
             return;
         }
@@ -195,40 +198,41 @@
         }
 
         var targetView = cwAPI.getView(assoToLoad.targetViewName);
-        if(targetView === undefined) {
+        if (targetView === undefined) {
             // message d'erreur
             cwAPI.notificationManager.addError(assoToLoad.targetViewName + " doesn't exist");
             return;
         }
-        if(targetView.type === "Index") {
-           var url = cwApi.getLiveServerURL() + "page/" + assoToLoad.targetViewName + '?' + Math.random(); 
+        if (targetView.type === "Index") {
+            var url = cwApi.getLiveServerURL() + "page/" + assoToLoad.targetViewName + '?' + Math.random();
         } else {
-           var url = cwApi.getLiveServerURL() + "page/" + assoToLoad.targetViewName + "/" + that.objectId +   '?' + Math.random(); 
+            var url = cwApi.getLiveServerURL() + "page/" + assoToLoad.targetViewName + "/" + that.objectId + '?' + Math.random();
         }
-        
+
         that.loadingInProgress[otName] = true;
-        $.getJSON(url, function (json) {
+        $.getJSON(url, function(json) {
 
             // manage hidden Nodes
             var nodeIDs = Object.keys(cwAPI.getViewsSchemas()[assoToLoad.targetViewName].NodesByID);
-            nodeIDs.splice(nodeIDs.indexOf(assoToLoad.nodeId),1);
-            nodeIDs.splice(nodeIDs.indexOf(assoToLoad.nodeIdChild),1);
-            
-            if(targetView.type === "Index") {
-                cwAPI.customLibs.utils.manageHiddenNodes(json,nodeIDs);
+            if (assoToLoad.nodeId !== "") nodeIDs.splice(nodeIDs.indexOf(assoToLoad.nodeId), 1);
+            if (assoToLoad.nodeIdChild !== "") nodeIDs.splice(nodeIDs.indexOf(assoToLoad.nodeIdChild), 1);
+
+            if (targetView.type === "Index") {
+                cwAPI.customLibs.utils.manageHiddenNodes(json, nodeIDs);
             } else {
-                cwAPI.customLibs.utils.manageHiddenNodes(json.object.associations,nodeIDs);
+                cwAPI.customLibs.utils.manageHiddenNodes(json.object.associations, nodeIDs);
                 json = json.object.associations;
             }
-            that.loadedItems[otName] = json[assoToLoad.nodeId];
-            
+            if (assoToLoad.nodeId !== "") that.loadedItems[otName] = json[assoToLoad.nodeId];
+            else that.loadedItems[otName] = json[assoToLoad.nodeIdChild];
+
             updateWaitingForUpdateList(that, otName, json);
             delete that.loadingInProgress[otName];
             return callback(json);
         });
     }
 
-    function setOptionListToSelect($select, json, itemsById, alreadyAssociatedItems,assoToLoad) {
+    function setOptionListToSelect($select, json, itemsById, alreadyAssociatedItems, assoToLoad) {
         var o, list, i, item, markedForDeletion;
         o = ['<option></option>'];
         list = json[Object.keys(json)[0]];
@@ -241,12 +245,12 @@
                 o.push(' selected');
             }
 
-            o.push('>', cwAPI.customLibs.utils.getItemDisplayString(assoToLoad.targetViewName,item), '</option>');
+            o.push('>', cwAPI.customLibs.utils.getItemDisplayString(assoToLoad.targetViewName, item), '</option>');
         }
         $select.html(o.join(''));
     }
 
-    function showDeleteIconsAndSetActions (mainContainer) {
+    function showDeleteIconsAndSetActions(mainContainer) {
         var deleteIcons, i, icon, canDelete, $li;
 
         if (!cwApi.isUndefined(mainContainer)) {
@@ -303,14 +307,14 @@
         showDeleteIconsAndSetActions(mainContainer);
     }
 
-    function onFilterChange(evt, params){
+    function onFilterChange(evt, params) {
         // reset select data
         var $selectData = $('select.cw-edit-mode-association-autocomplete-data-' + this.assoToLoad.layoutId);
-        if (params.selected){
+        if (params.selected) {
             var itemId = params.selected;
             var itemsById = {};
             var json = this.itemsById[itemId].associations;
-            setOptionListToSelect($selectData, json, itemsById, this.alreadyAssociatedItems,this.assoToLoad);
+            setOptionListToSelect($selectData, json, itemsById, this.alreadyAssociatedItems, this.assoToLoad);
             $selectData.trigger("chosen:updated");
             $selectData.off('change');
             $selectData.on('change', onSelectChange.bind({
@@ -322,6 +326,8 @@
         }
     }
 
+
+
     function onSelectChange(evt, params) {
         if (params.selected) {
             var extraPropertyNames = [];
@@ -329,14 +335,14 @@
             var schema = cwApi.ViewSchemaManager.getNodeSchemaByIdForCurrentView(this.assoToLoad.layoutId);
             var that = this;
             if (!cwApi.isObjectEmpty(schema.Filters)) {
-                Object.keys(schema.Filters).forEach(function (key) {
+                Object.keys(schema.Filters).forEach(function(key) {
                     extraPropertyNames.push(key);
                 });
                 cwApi.CwRest.Diagram.getExistingObject(
                     schema.ObjectTypeScriptName,
                     itemId,
                     extraPropertyNames,
-                    function (isSuccess, completeObj) {
+                    function(isSuccess, completeObj) {
                         if (isSuccess) {
                             var showError = isWarning(schema.Filters, completeObj.properties);
                             if (showError) {
@@ -351,25 +357,25 @@
         }
     }
 
-    function execFilterEdit(layout){
+    function execFilterEdit(layout) {
         var $a = $('a#cw-edit-mode-add-autocomplete-' + layout.layoutId + '-' + layout.objectId);
         var $assoBox = $('div.property-box.' + layout.layoutId + '-node-box.property-box-asso');
         var assoToLoad = {
             layoutId: layout.layoutId,
             nodeId: layout.options.CustomOptions['view-root-nodeid'],
             nodeIdChild: layout.options.CustomOptions['selection-data-nodeid'],
-            sourceId : layout.objectId,
-            targetObjectTypeScriptName : layout.mmNode.ObjectTypeScriptName,
+            sourceId: layout.objectId,
+            targetObjectTypeScriptName: layout.mmNode.ObjectTypeScriptName,
             targetViewName: layout.options.CustomOptions['filtered-view'],
             singleView: layout.options.CustomOptions['singleView']
         };
         layout.loadedItems = {};
         layout.loadingInProgress = {};
         layout.waitingForUpdates = {};
-        $a.off('click').on('click', function(){
+        $a.off('click').on('click', function() {
             cwApi.CwPendingEventsManager.setEvent("SetActionsOnAddToExistingLink");
             var $select = $assoBox.find('select.cw-edit-mode-association-autocomplete');
-            var $selectFilter = $assoBox.find('select.cw-edit-mode-association-autocomplete-filter-'+layout.layoutId);
+            var $selectFilter = $assoBox.find('select.cw-edit-mode-association-autocomplete-filter-' + layout.layoutId);
             var $selectData = $assoBox.find('select.cw-edit-mode-association-autocomplete-data-' + layout.layoutId);
             $select.toggleClass('cw-hidden');
 
@@ -384,38 +390,54 @@
                 var $ulContainer = $("ul.cw-list." + assoToLoad.layoutId);
                 var alreadyAssociatedItems = {};
 
-                $ulContainer.children('.cw-item').each(function (i, li) {
+                $ulContainer.children('.cw-item').each(function(i, li) {
                     alreadyAssociatedItems[$(li).attr('data-item-id')] = true;
                 });
 
                 // is no more hidden
-                getItems(layout, assoToLoad, function (json) {
+                getItems(layout, assoToLoad, function(json) {
                     var itemsById = {};
                     //setOptionListToSelect($selectFilter, json, itemsById, alreadyAssociatedItems);
-                    setOptionListToSelect($selectFilter, json, itemsById, {},assoToLoad);
+
+
                     $select.removeAttr('disabled');
                     $select.chosen({
                         no_results_text: $.i18n.prop('EditModeAssociateNoItemFound'),
                         display_selected_options: false
                     });
 
-                    $selectFilter.off('change');
-                    $selectFilter.on('change', onFilterChange.bind({
-                        $ulContainer: $ulContainer,
-                        assoToLoad: assoToLoad,
-                        itemsById: itemsById,
-                        editAassociationManager: this,
-                        alreadyAssociatedItems: alreadyAssociatedItems
-                    }));
+                    if (assoToLoad.nodeId !== "") {
+                        setOptionListToSelect($selectFilter, json, itemsById, {}, assoToLoad);
+
+                        $selectFilter.off('change');
+                        $selectFilter.on('change', onFilterChange.bind({
+                            $ulContainer: $ulContainer,
+                            assoToLoad: assoToLoad,
+                            itemsById: itemsById,
+                            editAassociationManager: this,
+                            alreadyAssociatedItems: alreadyAssociatedItems
+                        }));
+                    } else {
+                        setOptionListToSelect($selectData, json, itemsById, {}, assoToLoad);
+                        $selectData.trigger("chosen:updated");
+                        $selectData.off('change');
+                        $selectData.on('change', onSelectChange.bind({
+                            $ulContainer: $ulContainer,
+                            assoToLoad: assoToLoad,
+                            itemsById: itemsById,
+                            editAassociationManager: this
+                        }));
+                    }
+
                 });
             }
             cwApi.CwPendingEventsManager.deleteEvent("SetActionsOnAddToExistingLink");
         });
     }
 
-    cwLayoutFilteredListBox.prototype.applyJavaScript = function () {
+    cwLayoutFilteredListBox.prototype.applyJavaScript = function() {
         var that = this;
-        var intervalId = setInterval(function () {
+        var intervalId = setInterval(function() {
             var edit = cwApi.getQueryStringObject().cwmode;
             if (edit === 'edit') {
                 var $a = $('a#cw-edit-mode-add-autocomplete-' + that.layoutId + '-' + that.objectId);
