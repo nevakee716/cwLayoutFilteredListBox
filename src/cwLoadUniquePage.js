@@ -17,6 +17,17 @@
         }
     }
     
+    function setDocumentTitle(title) {
+        document.title = title;
+    }
+
+    function translateAndSetDocumentTitle(view) {
+        var translatedViewName = cwApi.mapToTranslation(view.name);
+        setDocumentTitle(translatedViewName);
+        return translatedViewName;
+    }
+
+
     function getPageNavigationForSinglePage(item, objectTypeScriptName) {
         var views, o, i, v, tabCount, viewsLoaded, currentViewName, navView, viewSchema, j, tab, navTab, questionnaireQueTab, questionnaireResultTab;
         if (cwApi.cwConfigs.SingleViewsByObjecttype === null) {
