@@ -217,7 +217,10 @@
         if (targetView.type === "Index") {
             var url = cwApi.getLiveServerURL() + "page/" + this.targetViewName + '?' + Math.random();
         } else {
-            var url = cwApi.getLiveServerURL() + "page/" + this.targetViewName + "/" + this.objectId + '?' + Math.random();
+            let queryObject = cwApi.getQueryStringObject();
+            let id = this.objectId;
+            if(queryObject.cwcreatesourceviewid) id = queryObject.cwcreatesourceviewid;
+            var url = cwApi.getLiveServerURL() + "page/" + this.targetViewName + "/" + id + '?' + Math.random();
         }
 
         this.loadingInProgress[otName] = true;
@@ -231,8 +234,9 @@
             if (targetView.type === "Index") {
                 cwAPI.customLibs.utils.manageHiddenNodes(json, nodeIDs);
             } else {
-                cwAPI.customLibs.utils.manageHiddenNodes(json.object.associations, nodeIDs);
                 json = json.object.associations;
+                cwAPI.customLibs.utils.manageHiddenNodes(json, nodeIDs);
+                
             }
 
             self.loadedItems[otName] = json[self.firstNodeId];
