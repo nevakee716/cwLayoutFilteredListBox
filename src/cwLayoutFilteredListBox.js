@@ -15,7 +15,8 @@
         this.targetObjectTypeScriptName = this.mmNode.ObjectTypeScriptName;
         this.targetViewName = this.options.CustomOptions['filtered-view'];
         this.dataViewName = this.options.CustomOptions['data-view'];
-
+        this.filterLabel = this.options.CustomOptions['filtered-ddl-label']
+        this.dataLabel = this.options.CustomOptions['selection-ddl-label']
 
         this.alreadyAssociatedItems = {};
         this.itemsById = {};
@@ -26,17 +27,17 @@
 
     };
 
-    cwLayoutFilteredListBox.appendAssociationSelect = function(output, nodeId, objectId, filterLabel, dataLabel) {
+    cwLayoutFilteredListBox.prototype.appendAssociationSelect = function(output, nodeId, objectId) {
         if (cwApi.cwEditProperties.canAddAssociationInput(nodeId)) {
             output.push('<div class="cw-property-details-association">');
-            if (filterLabel !== "") {
-                output.push('<p class="cw-hidden cw-edit-mode"><label id="cw-edit-mode-', nodeId, '-', objectId, '-filterlabel">', filterLabel, '</label>&nbsp;&nbsp;',
+            if (this.filterLabel !== "") {
+                output.push('<p class="cw-hidden cw-edit-mode"><label id="cw-edit-mode-', nodeId, '-', objectId, '-filterlabel">', this.filterLabel, '</label>&nbsp;&nbsp;',
                     '<select id="cw-edit-mode-autocomplete-', nodeId, '-', objectId, '-filterddl" disabled="disabled" class="cw-hidden chosen-select cw-edit-mode-association-autocomplete cw-edit-mode-association-autocomplete-filterddl cw-edit-mode-autocomplete-',
                     nodeId, ' cw-edit-mode-association-autocomplete-filter-', nodeId);
                 output.push('"></select></p>');
             }
 
-            output.push('<p class="cw-hidden cw-edit-mode"><label>', dataLabel, '</label>&nbsp;&nbsp;<select multiple data-placeholder="' + 'Use the arrows or select the objects to associate' +
+            output.push('<p class="cw-hidden cw-edit-mode"><label>', this.dataLabel, '</label>&nbsp;&nbsp;<select multiple data-placeholder="' + 'Use the arrows or select the objects to associate' +
                 '" disabled="disabled" data-ul-container-id="', nodeId, '-', objectId, '"  id="cw-edit-mode-autocomplete-', nodeId, '-', objectId,
                 '" class="cw-hidden chosen-select cw-edit-mode-association-autocomplete cw-edit-mode-autocomplete-', nodeId, ' cw-edit-mode-association-autocomplete-data-', nodeId);
             output.push('"></select></p>');
@@ -161,7 +162,7 @@
         }
         output.push('</div>');
         if (canAddAssociation === true) {
-            cwLayoutFilteredListBox.appendAssociationSelect(output, this.nodeID, objectId, this.options.CustomOptions['filtered-ddl-label'], this.options.CustomOptions['selection-ddl-label']);
+            this.appendAssociationSelect(output, this.nodeID, objectId);
         }
 
         output.push("</li>");
@@ -450,7 +451,7 @@
                         display_selected_options: false
                     });
                     
-                    if (self.nodeID !== "") {
+                    if (self.firstNodeId !== "") {
                         self.setOptionListToSelect($selectFilter, json, {});
                         $selectFilter.trigger("chosen:updated");
                         $selectFilter.off('change');
