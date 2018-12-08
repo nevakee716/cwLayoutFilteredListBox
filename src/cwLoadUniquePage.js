@@ -39,7 +39,7 @@
         currentViewName = cwApi.getQueryStringObject().cwview;
 
         function not_check_view(view) {
-          return view[0] === 'z' && view[1] === '_';
+          return view[0] !== 'z' || view[1] !== '_';
         }
         views = views.filter(not_check_view);
 
