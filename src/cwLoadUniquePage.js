@@ -36,11 +36,16 @@
 
         views = cwApi.cwConfigs.SingleViewsByObjecttype[objectTypeScriptName.toLowerCase()];
         
+        currentViewName = cwApi.getQueryStringObject().cwview;
+
         function not_check_view(view) {
-          return view[0] !== 'z';
+          return view[0] === 'z' && view[1] === '_';
         }
         views = views.filter(not_check_view);
 
+        if(currentViewName[0] === 'z' && currentViewName[1] === '_'){
+            views = [currentViewName];
+        }
 
         viewsLoaded = views.map(function (v) {
             return cwApi.getView(v);
