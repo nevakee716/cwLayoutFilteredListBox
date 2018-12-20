@@ -45,6 +45,7 @@
 
         if(currentViewName[0] === 'z' && currentViewName[1] === '_'){
             views = [currentViewName];
+           // return "Edit";
         }
 
         viewsLoaded = views.map(function (v) {
