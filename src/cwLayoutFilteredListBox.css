@@ -31,33 +31,13 @@
 .filteredListBox ul.property-details li.property-details {
   list-style: none;
 }
-.filteredListBox ul.property-details .property-title {
-  background: #009688;
-  color: #FFFFFF;
-  font-size: 13px;
-  padding: 8px;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-}
-.filteredListBox ul.property-details .property-value {
-  padding: 8px;
-  border: 1px solid #009688;
-  border-top: none;
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px;
-}
 .filteredListBox ul.property-details .cw-property-details-association {
   text-align: left;
   width: 100%;
 }
-
 .filteredListBox .chosen-container {
   width: 100% !important;
 }
-
-
-
-
 .filteredListBox ul.property-details .cw-edit-mode-association-search {
   width: 100%;
   margin: 3px 0 2px 0;
@@ -200,11 +180,10 @@
   vertical-align: top;
   position: relative;
 }
-div.filteredListBox  {
+div.filteredListBox {
   background-color: white;
   max-width: 1210px;
   width: 100%;
   margin-bottom: 10px;
   border-radius: 2px;
 }
-
