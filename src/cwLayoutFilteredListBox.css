@@ -14,7 +14,10 @@ div.filteredListBox ul.property-details li.property-details {
 }
 div.filteredListBox ul.property-details .cw-property-details-association {
   text-align: left;
+}
+div.filteredListBox ul.property-details .cw-property-details-association p {
   width: 100%;
+  display: inline-flex;
 }
 div.filteredListBox ul.property-details .cw-edit-mode-association-search {
   width: 100%;
@@ -133,7 +136,7 @@ div.filteredListBox ul.property-details .chosen-container-active .chosen-choices
   box-shadow: none;
 }
 div.filteredListBox ul.property-details .chosen-container {
-  margin-top: 5px;
+  margin-top: 0px;
 }
 div.filteredListBox ul.property-details .chosen-container .chosen-results li.highlighted {
   background: none;
