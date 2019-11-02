@@ -6,6 +6,7 @@ div.filteredListBox {
   border-radius: 2px;
 }
 div.filteredListBox ul.property-details {
+  cursor: pointer;
   margin: 0px;
   padding: 0px;
 }
