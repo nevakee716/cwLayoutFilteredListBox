@@ -1,37 +1,68 @@
 {
-	"Name": "filteredListBox",
-	"DisplayName": "Filtered List Box",
-	"Description": "Filtered drop down by the associated objects to the selection in another drop down list",
-	"JavaScriptClassName": "cwLayoutFilteredListBox",
-	"Options": [{
-		"Id": "filtered-view",
-		"DisplayName":"1st Filter dataView",
-		"Description":"Set the name of the view you want to use data from",
-		"Type": 0
-	},{
-		"Id": "view-root-nodeid",
-		"DisplayName": "Node ID of the data to use as filter",
-		"Description": "Set the node ID you want to use data from to filter the drop down for the associated object",
-		"Type": 0
-	},{
-		"Id": "filtered-ddl-label",
-		"DisplayName":"Label for the drop down",
-		"Description":"Set the text that you want to appear in front of the drop down list",
-		"Type": 0
-	},{
-		"Id": "data-view",
-		"DisplayName":"2nd Filter dataView",
-		"Description":"Set the name of the view you want to use data from",
-		"Type": 0
-	},{
-		"Id": "selection-data-nodeid",
-		"DisplayName": "Node ID of the data to associate",
-		"Description": "Set the node ID of the data to be used for the associated objects",
-		"Type": 0
-	},{
-		"Id": "selection-ddl-label",
-		"DisplayName":"Label for the drop down to filter",
-		"Description":"Set the text that you want to appear in front of the drop down list that is used to filter",
-		"Type": 0
-	}]
+  "Name": "filteredListBox",
+  "DisplayName": "Filtered List Box",
+  "Description": "Filtered drop down by the associated objects to the selection in another drop down list",
+  "JavaScriptClassName": "cwLayoutFilteredListBox",
+  "Options": [
+    {
+      "Id": "filtered-view",
+      "DisplayName": "1st Filter dataView",
+      "Description": "Set the name of the view you want to use data from",
+      "Type": 0
+    },
+    {
+      "Id": "view-root-nodeid",
+      "DisplayName": "Node ID of the data to use as filter",
+      "Description": "Set the node ID you want to use data from to filter the drop down for the associated object",
+      "Type": 0
+    },
+    {
+      "Id": "filtered-ddl-label",
+      "DisplayName": "Label for the drop down",
+      "Description": "Set the text that you want to appear in front of the drop down list",
+      "Type": 0
+    },
+    {
+      "Id": "data-view",
+      "DisplayName": "2nd Filter dataView",
+      "Description": "Set the name of the view you want to use data from",
+      "Type": 0
+    },
+    {
+      "Id": "selection-data-nodeid",
+      "DisplayName": "Node ID of the data to associate",
+      "Description": "Set the node ID of the data to be used for the associated objects",
+      "Type": 0
+    },
+    {
+      "Id": "selection-ddl-label",
+      "DisplayName": "Label for the drop down to filter",
+      "Description": "Set the text that you want to appear in front of the drop down list that is used to filter",
+      "Type": 0
+    },
+    {
+      "Id": "collapse",
+      "DisplayName": "Collapse by default",
+      "Description": "Check if you want to collapse container",
+      "Type": 1
+    },
+    {
+      "Id": "title",
+      "DisplayName": "Title",
+      "Description": "Check if you want to collapse container",
+      "Type": 0
+    },
+    {
+      "Id": "title_display",
+      "DisplayName": "Display Title only if data",
+      "Description": "Check if you want to collapse container",
+      "Type": 1
+    },
+    {
+      "Id": "creation_page",
+      "DisplayName": "ObjectPage for Creation",
+      "Description": "the creation of object will be done on this objectPage",
+      "Type": 0
+    }
+  ]
 }
