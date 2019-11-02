@@ -21,11 +21,20 @@ You can also make a preselection for exemple we want to associate a city to a pr
 
 This Layout cannot create associated object, use the standard listbox
 This layout support the custom display string, it need to be filled in 1st and 2nd Filter Data View
+The exepend button won't work in complexe table
 ## Screen Shot
 
 <img src="https://raw.githubusercontent.com/JGrndn/cwLayoutFilteredListBox/master/screen/preview.png" alt="Drawing" style="width: 95%;"/>
 
 ## Options
+### Collapse by default : 
+Check if you want the layout to be reduce by default
+
+### Title : 
+Indicate the text inside the header of the layout, if blank it will display the name of the node
+
+### Display Title only if data : 
+If you check this option, if there is no association the header won't be display
 
 ### Node setup
 
