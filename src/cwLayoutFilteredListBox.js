@@ -46,7 +46,7 @@
           '-filterddl" disabled="disabled" class="cw-hidden chosen-select cw-edit-mode-association-autocomplete cw-edit-mode-association-autocomplete-filterddl cw-edit-mode-autocomplete-',
           nodeId,
           " cw-edit-mode-association-autocomplete-filter-",
-          nodeId,
+          nodeId
         );
         output.push('"></select></p>');
       }
@@ -65,7 +65,7 @@
         '" class="cw-hidden chosen-select cw-edit-mode-association-autocomplete cw-edit-mode-autocomplete-',
         nodeId,
         " cw-edit-mode-association-autocomplete-data-",
-        nodeId,
+        nodeId
       );
       output.push('"></select></p>');
       output.push("</div>");
