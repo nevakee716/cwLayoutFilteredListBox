@@ -1,11 +1,11 @@
 /* Copyright � 2012-2017 erwin, Inc. - All rights reserved */
 /*global cwAPI, jQuery*/
 
-(function(cwApi, $) {
+(function (cwApi, $) {
   "use strict";
   var cwLayoutFilteredListBox;
 
-  cwLayoutFilteredListBox = function(options, viewSchema) {
+  cwLayoutFilteredListBox = function (options, viewSchema) {
     cwApi.extend(this, cwApi.cwLayouts.CwLayout, options, viewSchema);
     this.drawOneMethod = cwApi.cwLayouts.cwLayoutList.drawOne.bind(this);
     cwApi.registerLayoutForJSActions(this);
@@ -27,7 +27,7 @@
     this.waitingForUpdates = {};
   };
 
-  cwLayoutFilteredListBox.prototype.appendAssociationSelect = function(output, nodeId, objectId) {
+  cwLayoutFilteredListBox.prototype.appendAssociationSelect = function (output, nodeId, objectId) {
     if (cwApi.cwEditProperties.canAddAssociationInput(nodeId)) {
       output.push('<div class="cw-property-details-association">');
       if (this.filterLabel !== "") {
@@ -54,7 +54,9 @@
       output.push(
         '<p class="cw-hidden cw-edit-mode"><label>',
         this.dataLabel,
-        '</label>&nbsp;&nbsp;<select multiple data-placeholder="' + "Use the arrows or select the objects to associate" + '" disabled="disabled" data-ul-container-id="',
+        '</label>&nbsp;&nbsp;<select multiple data-placeholder="' +
+          "Use the arrows or select the objects to associate" +
+          '" disabled="disabled" data-ul-container-id="',
         nodeId,
         "-",
         objectId,
@@ -89,7 +91,7 @@
       }
     }
     $e.addClass("animated bounceOutDown");
-    setTimeout(function() {
+    setTimeout(function () {
       $e.remove();
       cwApi.CwPendingEventsManager.deleteEvent("AssociationRemoveItem");
     }, 1000);
@@ -118,9 +120,9 @@
 
   function isWarning(filters, properties) {
     var showError = false;
-    Object.keys(filters).some(function(key) {
+    Object.keys(filters).some(function (key) {
       var property = properties[key.toLowerCase()];
-      filters[key].some(function(values) {
+      filters[key].some(function (values) {
         showError = checkFilter(values, property);
         return showError;
       });
@@ -129,7 +131,7 @@
     return showError;
   }
 
-  cwLayoutFilteredListBox.prototype.drawAssociations = function(output, associationTitleText, object) {
+  cwLayoutFilteredListBox.prototype.drawAssociations = function (output, associationTitleText, object) {
     if (cwApi.customLibs.utils === undefined) {
       output.push("<h2> Please Install Utils library </h2>");
       return;
@@ -178,7 +180,21 @@
     }
     output.push("'>");
     output.push("<ul class='property-details ", this.nodeID, "-details ", this.nodeID, "-", objectId, "-details'>");
-    output.push("<li id='htmlbox-header-", this.nodeID, "-", objectId, "' class='property-details ", this.nodeID, "-details property-title ", this.nodeID, "-title ", this.nodeID, "-", objectId, "-details'>");
+    output.push(
+      "<li id='htmlbox-header-",
+      this.nodeID,
+      "-",
+      objectId,
+      "' class='property-details ",
+      this.nodeID,
+      "-details property-title ",
+      this.nodeID,
+      "-title ",
+      this.nodeID,
+      "-",
+      objectId,
+      "-details'>"
+    );
     output.push('<div class="cw-property-details-left">');
 
     output.push('<div class="htmlbox-header-icon">');
@@ -202,10 +218,24 @@
     if (canAddAssociation === true) {
       ot = cwApi.mm.getObjectType(nodeSchema.ObjectTypeScriptName.toLowerCase());
       if (!cwApi.cwEditProperties.isObjectTypeForbiddenToAdd(nodeSchema.ObjectTypeScriptName) && this.creationPage) {
-        output.push('<a id="create_listbox_on_objectpage-', this.htmlID, '" class="cw-hidden btn no-text cw-doc-action cw-create-target-item" title="', $.i18n.prop("editProperties_createAssociationTarget", cwAPI.mm.getObjectType(nodeSchema.ObjectTypeScriptName).name), '"><i class="fa fa-plus cw-association-add-item cw-add-association"></i></a>');
+        output.push(
+          '<a id="create_listbox_on_objectpage-',
+          this.htmlID,
+          '" class="cw-hidden btn no-text cw-doc-action cw-create-target-item" title="',
+          $.i18n.prop("editProperties_createAssociationTarget", cwAPI.mm.getObjectType(nodeSchema.ObjectTypeScriptName).name),
+          '"><i class="fa fa-plus cw-association-add-item cw-add-association"></i></a>'
+        );
       }
       if (cwApi.cwEditProperties.canAddAssociationInput(this.nodeId)) {
-        output.push('<a class="btn no-text cw-hidden cw-doc-action cw-associate-to-existing-item cw-associate-to-existing-item-filtered" id="cw-edit-mode-add-autocomplete-', this.nodeID, "-", objectId, '"><i class="cw-association-associate-to-item fa fa-link" title="', $.i18n.prop("EditModeAssociateToOpenIconTooltip", ot.name), '"></i></a>');
+        output.push(
+          '<a class="btn no-text cw-hidden cw-doc-action cw-associate-to-existing-item cw-associate-to-existing-item-filtered" id="cw-edit-mode-add-autocomplete-',
+          this.nodeID,
+          "-",
+          objectId,
+          '"><i class="cw-association-associate-to-item fa fa-link" title="',
+          $.i18n.prop("EditModeAssociateToOpenIconTooltip", ot.name),
+          '"></i></a>'
+        );
       }
     }
     output.push("</div>");
@@ -214,7 +244,21 @@
     }
 
     output.push("</li>");
-    output.push("<li id='", this.nodeID, "-", objectId, "-value' class='property-details property-value ", this.nodeID, "-details ", this.nodeID, "-value ", this.nodeID, "-", objectId, "-details'>");
+    output.push(
+      "<li id='",
+      this.nodeID,
+      "-",
+      objectId,
+      "-value' class='property-details property-value ",
+      this.nodeID,
+      "-details ",
+      this.nodeID,
+      "-value ",
+      this.nodeID,
+      "-",
+      objectId,
+      "-details'>"
+    );
 
     if (false && this.isUsingDirective()) {
       // ready-only working only so disable for the moment
@@ -232,7 +276,7 @@
     this.objectId = objectId;
   };
 
-  cwLayoutFilteredListBox.prototype.addToWaitingForUpdate = function(objectTypeScriptName, callback) {
+  cwLayoutFilteredListBox.prototype.addToWaitingForUpdate = function (objectTypeScriptName, callback) {
     if (cwApi.isUndefined(this.waitingForUpdates[objectTypeScriptName])) {
       this.waitingForUpdates[objectTypeScriptName] = [callback];
     } else {
@@ -240,7 +284,7 @@
     }
   };
 
-  cwLayoutFilteredListBox.prototype.updateWaitingForUpdateList = function(objectTypeScriptName, json) {
+  cwLayoutFilteredListBox.prototype.updateWaitingForUpdateList = function (objectTypeScriptName, json) {
     if (!cwApi.isUndefined(this.waitingForUpdates[objectTypeScriptName])) {
       for (var i = 0; i < this.waitingForUpdates[objectTypeScriptName].length; i++) {
         var callback = this.waitingForUpdates[objectTypeScriptName][i];
@@ -250,7 +294,7 @@
     }
   };
 
-  cwLayoutFilteredListBox.prototype.getItems = function(callback) {
+  cwLayoutFilteredListBox.prototype.getItems = function (callback) {
     var self = this;
     var otName = this.targetObjectTypeScriptName;
 
@@ -274,7 +318,7 @@
     }
 
     this.loadingInProgress[otName] = true;
-    $.getJSON(url, function(json) {
+    $.getJSON(url, function (json) {
       // manage hidden Nodes
       var nodeIDs = Object.keys(cwAPI.getViewsSchemas()[self.targetViewName].NodesByID);
       if (self.firstNodeId !== "") nodeIDs.splice(nodeIDs.indexOf(self.firstNodeId), 1);
@@ -295,7 +339,7 @@
     });
   };
 
-  cwLayoutFilteredListBox.prototype.getSecondItems = function(id, callback) {
+  cwLayoutFilteredListBox.prototype.getSecondItems = function (id, callback) {
     var otName = this.targetObjectTypeScriptName + id;
     var self = this;
 
@@ -313,7 +357,7 @@
     var url = cwApi.getLiveServerURL() + "page/" + this.dataViewName + "/" + id + "?" + Math.random();
 
     this.loadingInProgress[otName] = true;
-    $.getJSON(url, function(json) {
+    $.getJSON(url, function (json) {
       // manage hidden Nodes
       var nodeIDs = Object.keys(cwAPI.getViewsSchemas()[self.dataViewName].NodesByID);
       nodeIDs.splice(nodeIDs.indexOf(self.secondNodeId), 1);
@@ -328,25 +372,27 @@
     });
   };
 
-  cwLayoutFilteredListBox.prototype.setOptionListToSelect = function($select, json) {
+  cwLayoutFilteredListBox.prototype.setOptionListToSelect = function ($select, json) {
     var o, list, i, item, markedForDeletion;
     o = ["<option></option>"];
     list = json[Object.keys(json)[0]];
-    for (i = 0; i < list.length; i++) {
-      item = list[i];
-      this.itemsById[item.object_id] = item;
-      markedForDeletion = cwApi.isObjectMarkedForDeletion(item) ? ' class="markedForDeletion"' : "";
-      o.push("<option ", markedForDeletion, '" value="', item.object_id, '"');
-      if (!cwApi.isUndefined(this.alreadyAssociatedItems[item.object_id])) {
-        o.push(" selected");
-      }
+    if (list) {
+      for (i = 0; i < list.length; i++) {
+        item = list[i];
+        this.itemsById[item.object_id] = item;
+        markedForDeletion = cwApi.isObjectMarkedForDeletion(item) ? ' class="markedForDeletion"' : "";
+        o.push("<option ", markedForDeletion, '" value="', item.object_id, '"');
+        if (!cwApi.isUndefined(this.alreadyAssociatedItems[item.object_id])) {
+          o.push(" selected");
+        }
 
-      o.push(">", cwAPI.customLibs.utils.getItemDisplayString(this.targetViewName, item), "</option>");
+        o.push(">", cwAPI.customLibs.utils.getItemDisplayString(this.targetViewName, item), "</option>");
+      }
     }
     $select.html(o.join(""));
   };
 
-  cwLayoutFilteredListBox.prototype.showDeleteIconsAndSetActions = function(mainContainer) {
+  cwLayoutFilteredListBox.prototype.showDeleteIconsAndSetActions = function (mainContainer) {
     var deleteIcons, i, icon, canDelete, $li;
 
     if (!cwApi.isUndefined(mainContainer)) {
@@ -378,7 +424,7 @@
     }
   };
 
-  cwLayoutFilteredListBox.prototype.addOnChangeItem = function(schema, itemId, showError) {
+  cwLayoutFilteredListBox.prototype.addOnChangeItem = function (schema, itemId, showError) {
     var drawOneLayout;
     var itemOutput = [];
     if (schema.LayoutDrawOneOptions !== null) {
@@ -394,25 +440,21 @@
     l.drawOneMethod(itemOutput, this.itemsById[itemId], undefined, false);
     this.alreadyAssociatedItems[itemId] = true;
     this.$ulContainer.append(itemOutput.join(""));
-    this.$ulContainer
-      .find("li")
-      .last()
-      .addClass("newly-added");
+    this.$ulContainer.find("li").last().addClass("newly-added");
     if (showError) {
       var o = [];
-      o.push('<i class="cw-association-filtered-item fa fa-exclamation" title="', $.i18n.prop("editProperties_gs_associate_filter_warning"), '"></i>');
-      this.$ulContainer
-        .find("li")
-        .last()
-        .find("div")
-        .first()
-        .append(o.join(""));
+      o.push(
+        '<i class="cw-association-filtered-item fa fa-exclamation" title="',
+        $.i18n.prop("editProperties_gs_associate_filter_warning"),
+        '"></i>'
+      );
+      this.$ulContainer.find("li").last().find("div").first().append(o.join(""));
     }
     var mainContainer = $("li." + schema.NodeID + "-value");
     this.showDeleteIconsAndSetActions(mainContainer);
   };
 
-  cwLayoutFilteredListBox.prototype.onFilterChange = function(evt, params) {
+  cwLayoutFilteredListBox.prototype.onFilterChange = function (evt, params) {
     var self = this;
     // reset select data
     var $selectData = $("select.cw-edit-mode-association-autocomplete-data-" + this.nodeID);
@@ -420,7 +462,7 @@
       var itemId = params.selected;
       var json;
       if (this.dataViewName !== "") {
-        this.getSecondItems(itemId, function(json) {
+        this.getSecondItems(itemId, function (json) {
           self.setOptionListToSelect($selectData, json);
           $selectData.trigger("chosen:updated");
           $selectData.off("change");
@@ -436,17 +478,17 @@
     }
   };
 
-  cwLayoutFilteredListBox.prototype.onSelectChange = function(evt, params) {
+  cwLayoutFilteredListBox.prototype.onSelectChange = function (evt, params) {
     if (params.selected) {
       var extraPropertyNames = [];
       var itemId = params.selected;
       var schema = cwApi.ViewSchemaManager.getNodeSchemaByIdForCurrentView(this.nodeID);
       var self = this;
       if (!cwApi.isObjectEmpty(schema.Filters)) {
-        Object.keys(schema.Filters).forEach(function(key) {
+        Object.keys(schema.Filters).forEach(function (key) {
           extraPropertyNames.push(key);
         });
-        cwApi.CwRest.Diagram.getExistingObject(schema.ObjectTypeScriptName, itemId, extraPropertyNames, function(isSuccess, completeObj) {
+        cwApi.CwRest.Diagram.getExistingObject(schema.ObjectTypeScriptName, itemId, extraPropertyNames, function (isSuccess, completeObj) {
           if (isSuccess) {
             var showError = isWarning(schema.Filters, completeObj.properties);
             if (showError) {
@@ -461,11 +503,11 @@
     }
   };
 
-  cwLayoutFilteredListBox.prototype.execFilterEdit = function() {
+  cwLayoutFilteredListBox.prototype.execFilterEdit = function () {
     var $a = $("a#cw-edit-mode-add-autocomplete-" + this.nodeID + "-" + this.objectId);
     var $assoBox = $("div.property-box." + this.nodeID + "-node-box.property-box-asso");
     var self = this;
-    $a.off("click").on("click", function() {
+    $a.off("click").on("click", function () {
       cwApi.CwPendingEventsManager.setEvent("SetActionsOnAddToExistingLink");
       var $select = $assoBox.find("select.cw-edit-mode-association-autocomplete");
       var $selectFilter = $assoBox.find("select.cw-edit-mode-association-autocomplete-filter-" + self.nodeID);
@@ -481,12 +523,12 @@
       if (!$select.hasClass("cw-hidden")) {
         self.$ulContainer = $("ul.cw-list." + self.nodeID);
 
-        self.$ulContainer.children(".cw-item").each(function(i, li) {
+        self.$ulContainer.children(".cw-item").each(function (i, li) {
           self.alreadyAssociatedItems[$(li).attr("data-item-id")] = true;
         });
 
         // is no more hidden
-        self.getItems(function(json) {
+        self.getItems(function (json) {
           $select.removeAttr("disabled");
           $select.chosen({
             no_results_text: $.i18n.prop("EditModeAssociateNoItemFound"),
@@ -510,9 +552,9 @@
     });
   };
 
-  cwLayoutFilteredListBox.prototype.applyJavaScript = function() {
+  cwLayoutFilteredListBox.prototype.applyJavaScript = function () {
     var self = this;
-    var intervalId = setInterval(function() {
+    var intervalId = setInterval(function () {
       var edit = cwApi.getQueryStringObject().cwmode;
       if (edit === "edit") {
         $("create_listbox_on_objectpage-" + this.htmlID)
@@ -532,7 +574,7 @@
     if (expendButton) expendButton.addEventListener("click", this.manageExpend.bind(this));
   };
 
-  cwLayoutFilteredListBox.prototype.navigatetoObjectPage = function(e) {
+  cwLayoutFilteredListBox.prototype.navigatetoObjectPage = function (e) {
     var url,
       queryObject = cwApi.getQueryStringObject(),
       view = queryObject.cwview,
@@ -561,13 +603,13 @@
     cwApi.updateURLHash(url);
   };
 
-  cwLayoutFilteredListBox.prototype.manageExpend = function() {
+  cwLayoutFilteredListBox.prototype.manageExpend = function () {
     var listBoxHtml = document.getElementById("htmlbox-" + this.htmlID);
     var htmlID = this.htmlID;
-    if (cwApi.queryObject.isEditMode() && listBoxHtml.className.indexOf("minus") !== -1) {
+    if ((cwApi.queryObject.isEditMode() || cwApi.queryObject.isCreatePage()) && listBoxHtml.className.indexOf("minus") !== -1) {
       return;
     }
-    $("#" + htmlID + "-value").toggle("300", function() {
+    $("#" + htmlID + "-value").toggle("300", function () {
       $("#htmlbox-" + htmlID)
         .toggleClass("fa fa-minus")
         .toggleClass("fa fa-plus");
