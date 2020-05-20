@@ -197,18 +197,24 @@
     );
     output.push('<div class="cw-property-details-left">');
 
-    output.push('<div class="htmlbox-header-icon">');
+    output.push('<div class="htmlbox-header-icon" class="');
 
-    if (associationTargetNode.length !== 0) {
-      output.push('<div id="htmlbox-', this.nodeID, "-", objectId, '" class="');
-      if (this.options.CustomOptions["collapse"] === true) {
-        output.push("fa fa-plus");
-      } else {
-        output.push("fa fa-minus");
-      }
-      output.push('"></div>');
-      output.push('<label class="cw-property-title-displayname">', listBoxNameFromNode, "</label></div>");
+    if (associationTargetNode.length > 0 || cwApi.queryObject.isEditMode()) {
+      output.push("cw-visible");
+    } else {
+      output.push("cw-hidden");
     }
+    output.push('">');
+
+    output.push('<div id="htmlbox-', this.nodeID, "-", objectId, '" class="');
+    if (this.options.CustomOptions["collapse"] === true) {
+      output.push("fa fa-plus");
+    } else {
+      output.push("fa fa-minus");
+    }
+    output.push('"></div>');
+    output.push('<label class="cw-property-title-displayname">', listBoxNameFromNode, "</label></div>");
+
     output.push("</div>");
 
     output.push('<div class="cw-property-details-right">');

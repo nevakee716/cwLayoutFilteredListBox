@@ -172,3 +172,6 @@ div.filteredListBox div.cw-property-details-right {
   vertical-align: top;
   position: relative;
 }
+div.filteredListBox label {
+  white-space: pre;
+}
