@@ -434,9 +434,9 @@
     var drawOneLayout;
     var itemOutput = [];
     if (schema.LayoutDrawOneOptions !== null) {
-      drawOneLayout = new cwApi.cwLayouts[schema.LayoutDrawOne](schema.LayoutDrawOneOptions);
+      drawOneLayout = new cwApi.cwLayouts[schema.LayoutDrawOne](schema.LayoutDrawOneOptions, schema);
     } else {
-      drawOneLayout = new cwApi.cwLayouts.cwLayoutList(schema.LayoutOptions);
+      drawOneLayout = new cwApi.cwLayouts.cwLayoutList(schema.LayoutOptions, schema);
     }
 
     var l = cwApi.cwEditProperties.getLayoutWithTemplateOptions(drawOneLayout);
@@ -560,17 +560,7 @@
 
   cwLayoutFilteredListBox.prototype.applyJavaScript = function () {
     var self = this;
-    var intervalId = setInterval(function () {
-      var edit = cwApi.getQueryStringObject().cwmode;
-      if (edit === "edit") {
-        $("create_listbox_on_objectpage-" + this.htmlID)
-          .toggleClass("cw-visible")
-          .toggleClass("cw-hidden");
-        var $a = $("a#cw-edit-mode-add-autocomplete-" + self.nodeID + "-" + self.objectId);
-        $a.removeClass("cw-hidden");
-        clearInterval(self.intervalId);
-      }
-    }, 500);
+
     this.execFilterEdit();
     if (this.creationPage) {
       var createButton = document.getElementById("create_listbox_on_objectpage-" + this.htmlID);
@@ -612,7 +602,15 @@
   cwLayoutFilteredListBox.prototype.manageExpend = function () {
     var listBoxHtml = document.getElementById("htmlbox-" + this.htmlID);
     var htmlID = this.htmlID;
-    if ((cwApi.queryObject.isEditMode() || cwApi.queryObject.isCreatePage()) && listBoxHtml.className.indexOf("minus") !== -1) {
+
+    var a = document.querySelector("#cw-edit-mode-add-autocomplete-role_20527_108451663-" + this.htmlID);
+
+    if (
+      (cwApi.queryObject.isEditMode() ||
+        cwApi.queryObject.isCreatePage() ||
+        document.querySelector("#cw-edit-mode-add-autocomplete-" + this.htmlID).className.indexOf("cw-hidden") === -1) &&
+      listBoxHtml.className.indexOf("minus") !== -1
+    ) {
       return;
     }
     $("#" + htmlID + "-value").toggle("300", function () {
