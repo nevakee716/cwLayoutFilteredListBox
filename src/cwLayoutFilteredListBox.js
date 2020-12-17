@@ -433,6 +433,12 @@
   cwLayoutFilteredListBox.prototype.addOnChangeItem = function (schema, itemId, showError) {
     var drawOneLayout;
     var itemOutput = [];
+
+    if (schema.RootNodesId === undefined) schema.RootNodesId = [schema.nodeID];
+    if (schema.NodesByID === undefined) {
+      schema.NodesByID = {};
+      schema.NodesByID[schema.nodeID] = schema;
+    }
     if (schema.LayoutDrawOneOptions !== null) {
       drawOneLayout = new cwApi.cwLayouts[schema.LayoutDrawOne](schema.LayoutDrawOneOptions, schema);
     } else {
