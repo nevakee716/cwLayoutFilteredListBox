@@ -161,7 +161,7 @@
     if (this.options.CustomOptions["title"] !== "") {
       listBoxNameFromNode = this.options.CustomOptions["title"];
     } else {
-      listBoxNameFromNode = cwApi.mapToTranslation(this.mmNode.NodeName);
+      listBoxNameFromNode = cwApi.mapToTranslation(this.viewSchema.NodesByID[this.nodeID].NodeName);
     }
 
     associationTypeScriptName = nodeSchema.AssociationTypeScriptName;
