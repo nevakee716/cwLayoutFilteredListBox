@@ -5,6 +5,10 @@ div.filteredListBox {
   margin-bottom: 10px;
   border-radius: 2px;
 }
+div.filteredListBox.collapsed {
+  height: -moz-max-content;
+  height: fit-content;
+}
 div.filteredListBox ul.property-details {
   cursor: pointer;
   margin: 0px;
