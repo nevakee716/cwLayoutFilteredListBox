@@ -579,7 +579,7 @@
   cwLayoutFilteredListBox.prototype.navigatetoObjectPage = function (e) {
     var url,
       queryObject = cwApi.getQueryStringObject(),
-      view = queryObject.cwview,
+      view = sessionStorage.getItem("lastUrl") ? sessionStorage.getItem("lastUrl") : queryObject.cwview,
       tabid = queryObject.cwtabid,
       asso = {},
       item = {},
