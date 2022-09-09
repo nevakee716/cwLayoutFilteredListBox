@@ -1,6 +1,6 @@
 {
   "name": "cwLayoutFilteredListBox",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Allow you to filter data when in edit mode, according another view set up",
   "main": "src/cwLayoutFilteredListBox.js",
   "scripts": {
